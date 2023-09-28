@@ -11,17 +11,24 @@ export const authService = {
     validateToken
 }
 
-const cryptr = new Cryptr(process.env.SECRET1 || 'Secret-Puk-1234')
+const cryptr = new Cryptr(process.env.SECRET || 'Secret-Puk-1234')
+
+// console.log("bcrypt", bcrypt('admin'));
 
 async function login(username, password) {
+    // console.log(username, password);
     logger.debug(`auth.service - login with username: ${username}`)
 
     const user = await userService.getByUsername(username)
+    // console.log(user, "user from service auth");
     if (!user) throw new Error('Invalid username or password')
-
+    console.log(password);
+    console.log(user.password);
     const match = await bcrypt.compare(password, user.password)
-    if (!match) throw new Error('Invalid username or password')
-
+    if (!match){
+        console.log("oooo");
+        throw new Error('Invalid username or password')
+    }
     delete user.password
     return user
 }

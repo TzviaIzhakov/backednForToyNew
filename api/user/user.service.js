@@ -48,6 +48,7 @@ async function getByUsername(username) {
     try {
         const collection = await dbService.getCollection('user')
         const user = await collection.findOne({ username })
+        // console.log(user,"user");
         return user
     } catch (err) {
         logger.error(`while finding user ${username}`, err)
@@ -84,6 +85,7 @@ async function update(user) {
 }
 
 async function add(user) {
+    // console.log(user,"add from servoce");
     try {
         // Validate that there are no such user:
         const existUser = await getByUsername(user.username)
@@ -94,7 +96,7 @@ async function add(user) {
             username: user.username,
             password: user.password,
             fullname: user.fullname,
-            score: user.score || 0
+            balance: user.balance || 0
         }
         const collection = await dbService.getCollection('user')
         await collection.insertOne(userToAdd)

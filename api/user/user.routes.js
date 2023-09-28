@@ -6,6 +6,7 @@ import { getUser, getUsers, deleteUser, updateUser } from './user.controller.js'
 export const userRoutes = express.Router()
 
 // middleware that is specific to this router
+
 // userRoutes.use(requireAuth)
 
 userRoutes.get('/', getUsers)
