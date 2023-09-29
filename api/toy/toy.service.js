@@ -49,6 +49,7 @@ async function remove(toyId) {
     try {
         const collection = await dbService.getCollection('toy')
         await collection.deleteOne({ _id: ObjectId(toyId) })
+        console.log("ppppppp");
     } catch (err) {
         logger.error(`cannot remove toy ${toyId}`, err)
         throw err

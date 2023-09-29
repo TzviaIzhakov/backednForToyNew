@@ -19,8 +19,8 @@ export async function getToys(req, res) {
 
 export async function getToyById(req, res) {
     try {
-        const { toyId } = req.params
-        const toy =  await toyService.get(toyId);
+        const { id } = req.params
+        const toy =  await toyService.getById(id);
         res.send(toy)
     } catch (err) {
         logger.error('Failed to get toy', err)
@@ -30,7 +30,7 @@ export async function getToyById(req, res) {
 
 export async function addToy(req, res) {
     // const { loggedinUser } = req
-
+    console.log("add");
     try {
         const { name,inStock,price,labels } = req.body
         const toy = {
@@ -40,7 +40,7 @@ export async function addToy(req, res) {
             labels
         }
         // car.owner = loggedinUser
-        const savedToy =  await toyService.save(toy)
+        const savedToy =  await toyService.add(toy)
         res.send(savedToy)
     } catch (err) {
         logger.error('Failed to add toy', err)
@@ -58,7 +58,7 @@ export async function updateToy(req, res) {
             price: +price,
             labels
         }
-        const savedToy =  await toyService.save(toy)
+        const savedToy =  await toyService.update(toy)
         res.send(savedToy)
     } catch (err) {
         logger.error('Failed to update toy', err)
@@ -68,8 +68,9 @@ export async function updateToy(req, res) {
 
 export async function removeToy(req, res) {
     try {
-        const { toyId } = req.params
-        toyService.remove(toyId)(toyId)
+        const { id } = req.params
+        console.log(id,"toyId controller");
+        await toyService.remove(id)
         res.send()
     } catch (err) {
         logger.error('Failed to remove toy', err)
