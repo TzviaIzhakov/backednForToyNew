@@ -29,8 +29,7 @@ export async function getToyById(req, res) {
 }
 
 export async function addToy(req, res) {
-    // const { loggedinUser } = req
-    console.log("add");
+    const { loggedinUser } = req
     try {
         const { name,inStock,price,labels } = req.body
         const toy = {
