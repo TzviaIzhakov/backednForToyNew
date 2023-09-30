@@ -84,14 +84,14 @@ async function update(toy) {
     }
 }
 
-async function addCarMsg(carId, msg) {
+async function addToyMsg(toyId, msg) {
     try {
         msg.id = utilService.makeId()
-        const collection = await dbService.getCollection('car')
-        await collection.updateOne({ _id: ObjectId(carId) }, { $push: { msgs: msg } })
+        const collection = await dbService.getCollection('toy')
+        await collection.updateOne({ _id: ObjectId(toyId) }, { $push: { msgs: msg } })
         return msg
     } catch (err) {
-        logger.error(`cannot add car msg ${carId}`, err)
+        logger.error(`cannot add toy msg ${toyId}`, err)
         throw err
     }
 }
@@ -113,6 +113,6 @@ export const toyService = {
     getById,
     add,
     update,
-    // addCarMsg,
+    addToyMsg,
     // removeCarMsg
 }

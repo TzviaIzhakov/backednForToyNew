@@ -31,12 +31,13 @@ export async function getToyById(req, res) {
 export async function addToy(req, res) {
     const { loggedinUser } = req
     try {
-        const { name,inStock,price,labels } = req.body
+        const { name,inStock,price,labels,msgs } = req.body
         const toy = {
             name,
             inStock,
             price: +price,
-            labels
+            labels,
+            msgs
         }
         // car.owner = loggedinUser
         const savedToy =  await toyService.add(toy)
@@ -77,21 +78,23 @@ export async function removeToy(req, res) {
     }
 }
 
-// export async function addToyMsg(req, res) {
-//     const { loggedinUser } = req
-//     try {
-//         const carId = req.params.id
-//         const msg = {
-//             txt: req.body.txt,
-//             by: loggedinUser,
-//         }
-//         const savedMsg = await carService.addCarMsg(carId, msg)
-//         res.json(savedMsg)
-//     } catch (err) {
-//         logger.error('Failed to update car', err)
-//         res.status(500).send({ err: 'Failed to update car' })
-//     }
-// }
+export async function addToyMsg(req, res) {
+    const { loggedinUser } = req
+    const {fullname,_id} = loggedinUser
+    console.log(req.body,"dddd");
+    try {
+        const toyId = req.params.id
+        const msg = {
+            txt: req.body.txt,
+            by: {fullname,_id},
+        }
+        const savedMsg = await toyService.addToyMsg(toyId, msg)
+        res.json(savedMsg)
+    } catch (err) {
+        logger.error('Failed to update toy', err)
+        res.status(500).send({ err: 'Failed to update toy' })
+    }
+}
 
 // export async function removeToyMsg(req, res) {
 //     const { loggedinUser } = req
