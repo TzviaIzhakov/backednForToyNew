@@ -31,13 +31,14 @@ export async function getToyById(req, res) {
 export async function addToy(req, res) {
     const { loggedinUser } = req
     try {
-        const { name,inStock,price,labels,msgs } = req.body
+        const { name,inStock,price,labels,msgs,imgUrl } = req.body
         const toy = {
             name,
             inStock,
             price: +price,
             labels,
-            msgs
+            msgs,
+            imgUrl
         }
         // car.owner = loggedinUser
         const savedToy =  await toyService.add(toy)
@@ -81,7 +82,7 @@ export async function removeToy(req, res) {
 export async function addToyMsg(req, res) {
     const { loggedinUser } = req
     const {fullname,_id} = loggedinUser
-    console.log(req.body,"dddd");
+    // console.log(req.body,"dddd");
     try {
         const toyId = req.params.id
         const msg = {
