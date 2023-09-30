@@ -41,6 +41,7 @@ app.use('/api/user', userRoutes)
 app.use('/api/toy', toyRoutes)
 
 
+
 // Make every unmatched server-side-route fall back to index.html
 // So when requesting http://localhost:3030/index.html/car/123 it will still respond with
 // our SPA (single page app) (the index.html file) and allow vue-router to take it from there
