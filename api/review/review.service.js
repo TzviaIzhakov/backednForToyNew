@@ -5,7 +5,6 @@ const {ObjectId} = mongodb
 
 async function query(filterBy = {}) {
     try {
-        // console.log(filterBy,"filter");
         const criteria = _buildCriteria(filterBy)
         console.log("cri", criteria);
         const collection = await dbService.getCollection('review')
@@ -39,7 +38,8 @@ async function query(filterBy = {}) {
                 $unwind: '$aboutToy'
             }
         ]).toArray()
-        console.log(reviews);
+        // console.log(reviews);
+
         reviews = reviews.map(review => {
 
             review.byUser = { _id: review.byUser._id, fullname: review.byUser.fullname }
@@ -48,8 +48,7 @@ async function query(filterBy = {}) {
             delete review.toyId
             return review
         })  
-        console.log(reviews);
-
+        // console.log(reviews,"reviews");
         return reviews
     } catch (err) {
         logger.error('cannot find reviews', err)
@@ -95,7 +94,7 @@ function _buildCriteria(filterBy) {
     const criteria = {}
     if (filterBy.userId) criteria.userId = ObjectId(filterBy.userId)
     if (filterBy.toyId) criteria.toyId = ObjectId(filterBy.toyId)
-    console.log(criteria);
+    // console.log(criteria);
     return criteria
 }
 

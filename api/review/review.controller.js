@@ -5,11 +5,8 @@ import {authService} from '../auth/auth.service.js'
 import {reviewService} from './review.service.js'
 
 export async function getReviews(req, res) {
-    // console.log("oooo");
     try {
         let filterBy = req.query
-        // console.log(userId,toyId );
-        // const filterBy = {userId: userId || '',toyId: toyId || ''}
         const reviews = await reviewService.query(filterBy)
         res.send(reviews)
     } catch (err) {
@@ -36,36 +33,14 @@ export async function getReviews(req, res) {
 export async function addReview(req, res) {
     
     var {loggedinUser} = req
-    // console.log(req.body,"req.body");
     try {
         var review = req.body
         review.userId = loggedinUser._id
         console.log(review);
         review = await reviewService.add(review)
         
-        // prepare the updated review for sending out
-        // review.aboutUser = await userService.getById(review.aboutUserId)
-        
-        // Give the user credit for adding a review
-        // var user = await userService.getById(review.byUserId)
-        // user.score += 10
-        // loggedinUser.score += 10
-
-        // loggedinUser = await userService.update(loggedinUser)
-        // review.byUser = loggedinUser
-
-        // User info is saved also in the login-token, update it
-        // const loginToken = authService.getLoginToken(loggedinUser)
-        // res.cookie('loginToken', loginToken)
-
         delete review.toyId
         delete review.userId
-
-        // socketService.broadcast({type: 'review-added', data: review, userId: loggedinUser._id})
-        // socketService.emitToUser({type: 'review-about-you', data: review, userId: review.aboutUser._id})
-        
-        // const fullUser = await userService.getById(loggedinUser._id)
-        // socketService.emitTo({type: 'user-updated', data: fullUser, label: fullUser._id})
 
         res.send(review)
 
