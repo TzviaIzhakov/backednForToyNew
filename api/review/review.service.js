@@ -38,7 +38,8 @@ async function query(filterBy = {}) {
                 $unwind: '$aboutToy'
             }
         ]).toArray()
-        // console.log(reviews);
+
+        console.log(reviews, "reviews before");
 
         reviews = reviews.map(review => {
 
@@ -48,7 +49,7 @@ async function query(filterBy = {}) {
             delete review.toyId
             return review
         })  
-        // console.log(reviews,"reviews");
+        console.log(reviews,"reviews after");
         return reviews
     } catch (err) {
         logger.error('cannot find reviews', err)
@@ -77,8 +78,8 @@ async function query(filterBy = {}) {
 async function add(review) {
     try {
         const reviewToAdd = {
-            userId: ObjectId(review.userId),
-            toyId: ObjectId(review.toyId),
+            userId: new ObjectId(review.userId),
+            toyId: new ObjectId(review.toyId),
             txt: review.txt
         }
         const collection = await dbService.getCollection('review')
@@ -92,8 +93,8 @@ async function add(review) {
 
 function _buildCriteria(filterBy) {
     const criteria = {}
-    if (filterBy.userId) criteria.userId = ObjectId(filterBy.userId)
-    if (filterBy.toyId) criteria.toyId = ObjectId(filterBy.toyId)
+    if (filterBy.userId) criteria.userId = new ObjectId(filterBy.userId)
+    if (filterBy.toyId) criteria.toyId = new ObjectId(filterBy.toyId)
     // console.log(criteria);
     return criteria
 }

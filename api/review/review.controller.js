@@ -8,6 +8,7 @@ export async function getReviews(req, res) {
     try {
         let filterBy = req.query
         const reviews = await reviewService.query(filterBy)
+        // console.log(reviews , "revs in controller");
         res.send(reviews)
     } catch (err) {
         logger.error('Cannot get reviews', err)
