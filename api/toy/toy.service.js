@@ -9,7 +9,6 @@ async function query(filterBy={name:'',inStock:'',labels:[]}) {
     // console.log(filterBy,"pp");
     try {
         const criteria = buildCriteria(filterBy)
-
         const collection = await dbService.getCollection('toy')
         var toys = await collection.find(criteria).toArray()
         return toys
